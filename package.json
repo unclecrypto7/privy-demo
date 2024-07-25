@@ -1,0 +1,31 @@
+{
+  "name": "privy-example",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@privy-io/react-auth": "^1.76.1",
+    "@privy-io/wagmi": "^0.2.12",
+    "@privy-io/wagmi-connector": "^0.1.13",
+    "@tanstack/react-query": "^5.51.11",
+    "next": "14.2.5",
+    "permissionless": "^0.1.41",
+    "react": "^18",
+    "react-dom": "^18",
+    "viem": "^2.17.11",
+    "wagmi": "^2.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
+  }
+}
