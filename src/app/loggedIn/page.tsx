@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useAccount, useDisconnect, useWalletClient } from "wagmi"
 import { usePublicClient } from "wagmi"
+import { useRouter } from "next/navigation";
 import {
     SmartAccount,
     signerToSimpleSmartAccount
@@ -45,6 +46,7 @@ const bundlerClient = createPimlicoBundlerClient({
 
 function loggedIn() {
 
+    const router  = useRouter();
     const {wallets, ready: walletsReady} = useWallets();
     const { disconnect } = useDisconnect();
     const { isConnected, ...account } = useAccount();
@@ -59,7 +61,7 @@ function loggedIn() {
         () => wallets.find((wallet) => wallet.walletClientType === "privy"),
         [wallets]
     )
-    const { logout} = usePrivy();
+    const {user,ready, authenticated, logout} = usePrivy();
     const {
         setActiveWallet
     } = useSetActiveWallet();
@@ -69,6 +71,12 @@ function loggedIn() {
             setActiveWallet(embeddedWallet)
         }
     }, [embeddedWallet])
+
+    useEffect(() => {
+        if (ready && !authenticated) {
+          router.push("/");
+        }
+      }, [ready, authenticated]);
 
     const signOut = useCallback(async () => {
         disconnect()
