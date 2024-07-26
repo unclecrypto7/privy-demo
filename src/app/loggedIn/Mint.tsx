@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { useState } from "react";
+
 import { SmartAccountClient } from "permissionless";
 import { ENTRYPOINT_ADDRESS_V06_TYPE } from "permissionless/types";
 import { encodeFunctionData } from "viem";

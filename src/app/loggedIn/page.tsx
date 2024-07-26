@@ -4,11 +4,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useAccount, useDisconnect, useWalletClient } from "wagmi";
 import { usePublicClient } from "wagmi";
 import { useRouter } from "next/navigation";
-import { SmartAccount, signerToSimpleSmartAccount } from "permissionless/accounts";
-import { Address, Chain, Hash, Transport, http } from "viem";
+import { signerToSimpleSmartAccount } from "permissionless/accounts";
+import { Hash, http } from "viem";
 import { ENTRYPOINT_ADDRESS_V06, SmartAccountClient, createSmartAccountClient, walletClientToSmartAccountSigner } from "permissionless";
 import { createPimlicoBundlerClient, createPimlicoPaymasterClient } from "permissionless/clients/pimlico";
-import { sepolia, fuse } from "viem/chains";
+import { fuse } from "viem/chains";
 import { ENTRYPOINT_ADDRESS_V06_TYPE } from "permissionless/types";
 import DemoTransactionButton from "../components/demo-transaction";
 
