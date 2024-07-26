@@ -35,12 +35,12 @@ const chains = [
         rpcUrl: `https://api.pimlico.io/v2/${fuse.id}/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
         explorerUrl: "https://explorer.fuse.io/tx/",
     },
-    {
-        name: "Sepolia",
-        chain: sepolia,
-        rpcUrl: `https://api.pimlico.io/v2/${sepolia.id}/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
-        explorerUrl: "https://sepolia.etherscan.io/tx/",
-    },
+    // {
+    //     name: "Sepolia",
+    //     chain: sepolia,
+    //     rpcUrl: `https://api.pimlico.io/v2/${sepolia.id}/rpc?apikey=${process.env.NEXT_PUBLIC_PIMLICO_API_KEY}`,
+    //     explorerUrl: "https://sepolia.etherscan.io/tx/",
+    // },
 ];
 
 function LoggedIn() {
