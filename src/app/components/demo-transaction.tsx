@@ -28,7 +28,7 @@ const DemoTransactionButton = ({
         <div>
             <button
                 onClick={sendTransaction}
-                className="mt-6 flex justify-center items-center w-64 cursor-pointer bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="mt-6 w-full flex justify-center items-center cursor-pointer  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
                 {<p className="mr-4">Demo transaction</p>}
             </button>
