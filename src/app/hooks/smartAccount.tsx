@@ -85,5 +85,32 @@ export function useSmartAccount() {
         }
     };
 
-    return { isConnected, smartAccountClient, handleChainChange, selectedChain };
+    const fetchUserOperationHash = async (txHash: string) => {
+        const uoHash = "";
+        let retries = 0;
+        let resObj = null;
+
+        while (retries < 20) {
+            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=fuse&first=10&skip=0`, {
+                headers: {
+                    "x-api-key": jiffyscanKey,
+                },
+            });
+            resObj = JSON.parse(await res.text());
+
+            if ("bundleDetails" in resObj && "userOps" in resObj.bundleDetails && resObj.bundleDetails.userOps.length > 0) {
+                return resObj.bundleDetails.userOps[0].userOpHash;
+            } else {
+                console.log("No bundle details found, retrying...");
+                retries++;
+                await new Promise((r) => setTimeout(r, 3000)); // wait for 2 seconds before retrying
+            }
+        }
+        if (retries >= 5) {
+            console.log("Failed to fetch bundle details after 5 retries");
+        }
+        return uoHash;
+    };
+
+    return { isConnected, smartAccountClient, handleChainChange, selectedChain, fetchUserOperationHash };
 }

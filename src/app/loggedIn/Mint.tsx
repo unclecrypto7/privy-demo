@@ -4,6 +4,7 @@ import { SmartAccountClient } from "permissionless";
 import { ENTRYPOINT_ADDRESS_V06_TYPE } from "permissionless/types";
 import { encodeFunctionData } from "viem";
 import { Hash } from "viem";
+import { useSmartAccount } from "../hooks/smartAccount";
 // import { useClipboard } from "react-use";
 
 const contractAddress = "0x708155F649059C4142493081947826FDcbB42905";
@@ -16,6 +17,7 @@ const Mint = ({
     onSendTransaction: (txHash: Hash) => void;
 }) => {
     const [txHash, setTxHash] = useState<string | null>(null);
+    const { fetchUserOperationHash } = useSmartAccount();
     const [loading, setLoading] = useState("");
 
     const copyToClipboard = (text: string) => {
@@ -65,34 +67,10 @@ const Mint = ({
                 chain: undefined,
             });
             setLoading("Fetching transaction details");
-            // onSendTransaction(txHash);
-            const jiffyApiKey = process.env.NEXT_PUBLIC_JIFFYSCAN_API_KEY as string;
-            let retries = 0;
-            let resObj = null;
 
-            while (retries < 10) {
-                const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=fuse&first=10&skip=0`, {
-                    headers: {
-                        "x-api-key": jiffyApiKey,
-                    },
-                });
-                resObj = JSON.parse(await res.text());
-
-                if ("bundleDetails" in resObj && "userOps" in resObj.bundleDetails && resObj.bundleDetails.userOps.length > 0) {
-                    console.log("User operations: ", resObj.bundleDetails.userOps[0]);
-                    onSendTransaction(resObj.bundleDetails.userOps[0].userOpHash);
-                    setLoading("");
-                    break;
-                } else {
-                    console.log("No bundle details found, retrying...");
-                    retries++;
-                    await new Promise((r) => setTimeout(r, 5000)); // wait for 2 seconds before retrying
-                }
-            }
-
-            if (retries === 5) {
-                console.log("Failed to fetch bundle details after 5 retries");
-            }
+            const uoHash = await fetchUserOperationHash(txHash);
+            onSendTransaction(uoHash);
+            setLoading("");
 
             console.log("Transaction Receipt:", txHash);
         } catch (error) {
