@@ -65,7 +65,21 @@ const Mint = ({
                 chain: undefined,
             });
             setLoading(false);
-            onSendTransaction(txHash);
+            // onSendTransaction(txHash);
+            const jiffyApiKey = process.env.NEXT_PUBLIC_JIFFYSCAN_API_KEY as string;
+            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=fuse&first=10&skip=0`, {
+                headers: {
+                    "x-api-key": jiffyApiKey,
+                },
+            });
+            const resObj = JSON.parse(await res.text());
+            console.log(resObj);
+            console.log;
+            if ("bundleDetails" in resObj && "userOps" in resObj.bundleDetails && resObj.bundleDetails.userOps.length > 0) {
+                console.log("User operations: ", resObj.bundleDetails.userOps[0]);
+                onSendTransaction(resObj.bundleDetails.userOps[0].userOpHash);
+            }
+
             console.log("Transaction Receipt:", txHash);
         } catch (error) {
             console.error("Error sending transaction:", error);
@@ -99,14 +113,19 @@ const Mint = ({
                 <div className="mt-4 w-full max-w-md">
                     <label className="block mb-2 text-sm font-medium text-gray-900">Mint Transaction hash:</label>
                     <div className="bg-gray-200 p-2 rounded break-all overflow-x-auto">
-                        <a target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+                        <a
+                            href={`https://jiffyscan.xyz/userOpHash/${txHash}?network=fuse`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 underline"
+                        >
                             {txHash}
                         </a>
                         <button
                             onClick={() => copyToClipboard(txHash)}
                             className="mt-2 w-48 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
-                            Copy TX Hash
+                            Copy Hash
                         </button>
                     </div>
                 </div>
