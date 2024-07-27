@@ -19,7 +19,9 @@ const DemoTransactionButton = ({
             account: smartAccountClient.account,
             to: zeroAddress,
             data: "0x",
-            value: BigInt(0)
+            value: BigInt(0),
+            maxFeePerGas: BigInt(10^10),
+            maxPriorityFeePerGas: BigInt(10^10),
         })
         onSendTransaction(txHash)
     }

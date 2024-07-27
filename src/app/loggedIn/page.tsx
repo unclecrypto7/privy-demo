@@ -5,7 +5,7 @@ import { useDisconnect } from "wagmi";
 import { useRouter } from "next/navigation";
 import { Hash } from "viem";
 import DemoTransactionButton from "../components/demo-transaction";
-
+import { NETWORK_RPC_MAP } from "./constants";
 import { usePrivy } from "@privy-io/react-auth";
 import Mint from "./Mint";
 import { useSmartAccount } from "../hooks/smartAccount";

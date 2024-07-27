@@ -5,15 +5,18 @@ import { sepolia, polygonAmoy, polygon, fuse } from "viem/chains";
 import { WagmiProvider, createConfig } from "@privy-io/wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http } from "wagmi";
+import { NETWORK_RPC_MAP } from "../loggedIn/constants";
 
+const chainId = 2040;
 const handleLogin = (user: any) => {
     console.log(`User ${user.id} logged in!`);
 };
 
 const wagmiConfig = createConfig({
-    chains: [fuse],
+    chains: [
+        NETWORK_RPC_MAP[2040]],
     transports: {
-        [fuse.id]: http(),
+        [chainId]: http(),
     },
 });
 
@@ -36,6 +39,7 @@ const privyConfig: PrivyClientConfig = {
         polygonAmoy,
         polygon,
         fuse,
+        NETWORK_RPC_MAP[2040]
         // Add any other supported chains here
     ],
 };

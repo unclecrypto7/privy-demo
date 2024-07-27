@@ -8,16 +8,17 @@ import { ENTRYPOINT_ADDRESS_V06_TYPE } from "permissionless/types";
 import { useEffect, useMemo, useState } from "react";
 import { fuse } from "viem/chains";
 import { http, useAccount, useDisconnect, usePublicClient, useWalletClient } from "wagmi";
+import { NETWORK_RPC_MAP } from "../loggedIn/constants";
 
 const jiffyscanKey = process.env.NEXT_PUBLIC_JIFFYSCAN_API_KEY as string;
 const bundlerUrl = process.env.NEXT_PUBLIC_BUNDLER_URL as string;
 // Define the chains with their respective entry points and RPC URLs
 export const CHAINS = [
     {
-        name: "Fuse",
-        chain: fuse,
+        name: "Vanar",
+        chain: NETWORK_RPC_MAP[2040],
         bundlerUrl: bundlerUrl,
-        explorerUrl: "https://explorer.fuse.io/tx/",
+        explorerUrl: "https://explorer.vanarchain.com/tx/",
     },
 ];
 
@@ -67,7 +68,7 @@ export function useSmartAccount() {
                     chain: selectedChain.chain,
                     bundlerTransport: bundlerTransport,
                     middleware: {
-                        gasPrice: async () => (await bundlerClient.getUserOperationGasPrice()).fast,
+                        // gasPrice: async () => (await bundlerClient.getUserOperationGasPrice()).fast,
                         sponsorUserOperation: jiffyPaymaster.sponsorUserOperationV6,
                     },
                 });
@@ -91,7 +92,7 @@ export function useSmartAccount() {
         let resObj = null;
 
         while (retries < 20) {
-            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=fuse&first=10&skip=0`, {
+            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=vanar&first=10&skip=0`, {
                 headers: {
                     "x-api-key": jiffyscanKey,
                 },

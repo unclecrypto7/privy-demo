@@ -7,7 +7,7 @@ import { Hash } from "viem";
 import { useSmartAccount } from "../hooks/smartAccount";
 // import { useClipboard } from "react-use";
 
-const contractAddress = "0x708155F649059C4142493081947826FDcbB42905";
+const contractAddress = "0xb80089c83089E575BB0cdc5F6ac52bfA1Ef50774";
 // Your contract ABI here
 
 const Mint = ({
@@ -41,9 +41,13 @@ const Mint = ({
         try {
             console.log("Minting 50 tokens...");
             setLoading("Minting");
+            // @ts-ignore
             const txHash = await smartAccountClient.sendTransaction({
-                to: "0x708155F649059C4142493081947826FDcbB42905",
+                
+                to: "0xb80089c83089E575BB0cdc5F6ac52bfA1Ef50774",
                 value: BigInt("0"),
+                maxFeePerGas: BigInt(10^10),
+            maxPriorityFeePerGas: BigInt(10^10),
                 data: encodeFunctionData({
                     functionName: "mintFifty",
                     abi: [
@@ -62,9 +66,10 @@ const Mint = ({
                         },
                     ],
                     args: [BigInt("50")],
+                    
                 }),
-                account: smartAccountClient.account as unknown as `0x${string}`,
-                chain: undefined,
+                // account: smartAccountClient.account as unknown as `0x${string}`,
+                // chain: undefined,
             });
             setLoading("Fetching transaction details");
 
@@ -106,7 +111,7 @@ const Mint = ({
                     <label className="block mb-2 text-sm font-medium text-gray-900">Mint Transaction hash:</label>
                     <div className="bg-gray-200 p-2 rounded break-all overflow-x-auto">
                         <a
-                            href={`https://jiffyscan.xyz/userOpHash/${txHash}?network=fuse`}
+                            href={`https://jiffyscan.xyz/userOpHash/${txHash}?network=vanar`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-500 underline"
