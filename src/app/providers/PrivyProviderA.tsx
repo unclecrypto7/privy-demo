@@ -1,21 +1,22 @@
 "use client";
 
-import { PrivyClientConfig, PrivyProvider } from "@privy-io/react-auth"
-//import { fuse, sepolia } from "viem/chains";
-import { sepolia, polygonAmoy, polygon, fuse } from "viem/chains"
-import { WagmiProvider, createConfig } from '@privy-io/wagmi';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-// import { Address, Chain, Hash, Transport, http } from "viem"
-import {http} from 'wagmi';
+import { PrivyClientConfig, PrivyProvider } from "@privy-io/react-auth";
+import { sepolia, polygonAmoy, polygon, fuse } from "viem/chains";
+import { WagmiProvider, createConfig } from "@privy-io/wagmi";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { http } from "wagmi";
+import { NETWORK_RPC_MAP } from "../loggedIn/constants";
 
+const chainId = 2040;
 const handleLogin = (user: any) => {
     console.log(`User ${user.id} logged in!`);
 };
 
 const wagmiConfig = createConfig({
-    chains: [fuse],
+    chains: [
+        NETWORK_RPC_MAP[2040]],
     transports: {
-        [fuse.id]: http(),
+        [chainId]: http(),
     },
 });
 
@@ -23,24 +24,27 @@ const queryClient = new QueryClient();
 
 const privyConfig: PrivyClientConfig = {
     embeddedWallets: {
-        createOnLogin: 'users-without-wallets',
+        createOnLogin: "users-without-wallets",
         noPromptOnSignature: false,
     },
-    loginMethods: ['wallet', 'email', 'google'],
+    loginMethods: ["wallet", "email", "google"],
     appearance: {
         showWalletLoginFirst: true,
         theme: "light",
         accentColor: "#676FFF",
         logo: "https://jiffyscan-frontend.vercel.app/images/Frame%2021.svg",
     },
-    supportedChains: [sepolia, polygonAmoy, polygon, fuse
+    supportedChains: [
+        sepolia,
+        polygonAmoy,
+        polygon,
+        fuse,
+        NETWORK_RPC_MAP[2040]
         // Add any other supported chains here
-      ],
+    ],
 };
 
-export const PrivyProviderA = ({
-    children
-}: { children: React.ReactNode }) => {
+export const PrivyProviderA = ({ children }: { children: React.ReactNode }) => {
     return (
         <PrivyProvider
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -56,4 +60,4 @@ export const PrivyProviderA = ({
             </QueryClientProvider>
         </PrivyProvider>
     );
-}
+};
