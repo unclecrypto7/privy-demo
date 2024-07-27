@@ -141,7 +141,7 @@ function LoggedIn() {
                                 <code>{smartAccountClient.account?.address}</code>
                             </div>
                         </div>
-                        <div className="mt-4">
+                        {/* <div className="mt-4">
                             <label className="block mb-2 text-sm font-medium text-gray-900">Select Chain:</label>
                             <select
                                 className="block w-full p-2 border border-gray-300 rounded bg-gray-50 text-gray-900"
@@ -154,7 +154,7 @@ function LoggedIn() {
                                     </option>
                                 ))}
                             </select>
-                        </div>
+                        </div> */}
                         <div className="mt-4 flex flex-col space-y-4">
                             <Mint smartAccountClient={smartAccountClient} onSendTransaction={onSendTransaction} />
                             <DemoTransactionButton smartAccountClient={smartAccountClient} onSendTransaction={onSendTransaction} />
