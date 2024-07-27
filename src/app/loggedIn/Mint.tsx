@@ -3,7 +3,7 @@ import { useState } from "react";
 import { SmartAccountClient } from "permissionless";
 import { ENTRYPOINT_ADDRESS_V06_TYPE } from "permissionless/types";
 import { encodeFunctionData } from "viem";
-import { Chain, Hash, Transport, zeroAddress } from "viem";
+import { Hash } from "viem";
 // import { useClipboard } from "react-use";
 
 const contractAddress = "0x708155F649059C4142493081947826FDcbB42905";
@@ -70,7 +70,7 @@ const Mint = ({
             let retries = 0;
             let resObj = null;
 
-            while (retries < 5) {
+            while (retries < 10) {
                 const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=fuse&first=10&skip=0`, {
                     headers: {
                         "x-api-key": jiffyApiKey,
@@ -86,7 +86,7 @@ const Mint = ({
                 } else {
                     console.log("No bundle details found, retrying...");
                     retries++;
-                    await new Promise((r) => setTimeout(r, 2000)); // wait for 2 seconds before retrying
+                    await new Promise((r) => setTimeout(r, 5000)); // wait for 2 seconds before retrying
                 }
             }
 
