@@ -16,7 +16,7 @@ const Mint = ({
     onSendTransaction: (txHash: Hash) => void;
 }) => {
     const [txHash, setTxHash] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState("");
 
     const copyToClipboard = (text: string) => {
         navigator.clipboard
@@ -38,7 +38,7 @@ const Mint = ({
 
         try {
             console.log("Minting 50 tokens...");
-            setLoading(true);
+            setLoading("Minting");
             const txHash = await smartAccountClient.sendTransaction({
                 to: "0x708155F649059C4142493081947826FDcbB42905",
                 value: BigInt("0"),
@@ -64,7 +64,7 @@ const Mint = ({
                 account: smartAccountClient.account as unknown as `0x${string}`,
                 chain: undefined,
             });
-            setLoading(false);
+            setLoading("Fetching transaction details");
             // onSendTransaction(txHash);
             const jiffyApiKey = process.env.NEXT_PUBLIC_JIFFYSCAN_API_KEY as string;
             let retries = 0;
@@ -81,6 +81,7 @@ const Mint = ({
                 if ("bundleDetails" in resObj && "userOps" in resObj.bundleDetails && resObj.bundleDetails.userOps.length > 0) {
                     console.log("User operations: ", resObj.bundleDetails.userOps[0]);
                     onSendTransaction(resObj.bundleDetails.userOps[0].userOpHash);
+                    setLoading("");
                     break;
                 } else {
                     console.log("No bundle details found, retrying...");
@@ -116,10 +117,10 @@ const Mint = ({
                     Mint Tokens
                 </button>
             </div>
-            {loading && (
+            {loading != "" && (
                 <div className="mt-4 w-full max-w-md">
-                    <label className="block mb-2 text-sm font-medium text-gray-900">Mint Transaction hash:</label>
-                    <div className="bg-gray-200 p-2 rounded break-all overflow-x-auto">... Loading</div>
+                    <label className="block mb-2 text-sm font-medium text-gray-900">Loading:</label>
+                    <div className="bg-gray-400 p-2 rounded break-all overflow-x-auto">{loading}</div>
                 </div>
             )}
             {txHash && (
