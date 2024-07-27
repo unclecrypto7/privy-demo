@@ -67,17 +67,30 @@ const Mint = ({
             setLoading(false);
             // onSendTransaction(txHash);
             const jiffyApiKey = process.env.NEXT_PUBLIC_JIFFYSCAN_API_KEY as string;
-            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=fuse&first=10&skip=0`, {
-                headers: {
-                    "x-api-key": jiffyApiKey,
-                },
-            });
-            const resObj = JSON.parse(await res.text());
-            console.log(resObj);
-            console.log;
-            if ("bundleDetails" in resObj && "userOps" in resObj.bundleDetails && resObj.bundleDetails.userOps.length > 0) {
-                console.log("User operations: ", resObj.bundleDetails.userOps[0]);
-                onSendTransaction(resObj.bundleDetails.userOps[0].userOpHash);
+            let retries = 0;
+            let resObj = null;
+
+            while (retries < 5) {
+                const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=fuse&first=10&skip=0`, {
+                    headers: {
+                        "x-api-key": jiffyApiKey,
+                    },
+                });
+                resObj = JSON.parse(await res.text());
+
+                if ("bundleDetails" in resObj && "userOps" in resObj.bundleDetails && resObj.bundleDetails.userOps.length > 0) {
+                    console.log("User operations: ", resObj.bundleDetails.userOps[0]);
+                    onSendTransaction(resObj.bundleDetails.userOps[0].userOpHash);
+                    break;
+                } else {
+                    console.log("No bundle details found, retrying...");
+                    retries++;
+                    await new Promise((r) => setTimeout(r, 2000)); // wait for 2 seconds before retrying
+                }
+            }
+
+            if (retries === 5) {
+                console.log("Failed to fetch bundle details after 5 retries");
             }
 
             console.log("Transaction Receipt:", txHash);
