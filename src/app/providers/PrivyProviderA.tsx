@@ -24,9 +24,9 @@ const privyConfig: PrivyClientConfig = {
         createOnLogin: "users-without-wallets",
         noPromptOnSignature: false,
     },
-    loginMethods: ["wallet", "email", "google"],
+    loginMethods: ["email", "google"],
     appearance: {
-        showWalletLoginFirst: true,
+        showWalletLoginFirst: false,
         theme: "light",
         accentColor: "#676FFF",
         logo: "https://jiffyscan-frontend.vercel.app/images/Frame%2021.svg",
@@ -35,7 +35,6 @@ const privyConfig: PrivyClientConfig = {
         sepolia,
         polygonAmoy,
         polygon,
-        fuse,
         base
         // Add any other supported chains here
     ],
