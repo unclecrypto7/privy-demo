@@ -17,7 +17,7 @@ export const CHAINS = [
         name: "Base Mainnet",
         chain: base, // Change from fuse to base mainnet
         bundlerUrl: bundlerUrl,
-        explorerUrl: "https://base.blockscout.com/", // Base Mainnet explorer URL
+        explorerUrl: "https://basescan.org/", // Base Mainnet explorer URL
     },
 ];
 

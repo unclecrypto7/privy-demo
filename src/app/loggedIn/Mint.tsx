@@ -7,7 +7,7 @@ import { Hash } from "viem";
 import { useSmartAccount } from "../hooks/smartAccount";
 // import { useClipboard } from "react-use";
 
-const contractAddress = "0x708155F649059C4142493081947826FDcbB42905";
+const contractAddress = "0x78e23b3Eb478110D508Ab1AC64b53C24520D68D3";
 // Your contract ABI here
 
 const Mint = ({
@@ -42,7 +42,7 @@ const Mint = ({
             console.log("Minting 50 tokens...");
             setLoading("Minting");
             const txHash = await smartAccountClient.sendTransaction({
-                to: "0x708155F649059C4142493081947826FDcbB42905",
+                to: "0x78e23b3Eb478110D508Ab1AC64b53C24520D68D3",
                 value: BigInt("0"),
                 data: encodeFunctionData({
                     functionName: "mintFifty",
