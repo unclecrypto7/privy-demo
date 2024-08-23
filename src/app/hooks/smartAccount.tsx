@@ -91,7 +91,7 @@ export function useSmartAccount() {
         let resObj = null;
 
         while (retries < 20) {
-            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=fuse&first=10&skip=0`, {
+            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=base&first=10&skip=0`, {
                 headers: {
                     "x-api-key": jiffyscanKey,
                 },

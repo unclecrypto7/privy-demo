@@ -1,7 +1,7 @@
 "use client";
 
 import { PrivyClientConfig, PrivyProvider } from "@privy-io/react-auth";
-import { sepolia, polygonAmoy, polygon, fuse } from "viem/chains";
+import { sepolia, polygonAmoy, polygon, fuse, base } from "viem/chains";
 import { WagmiProvider, createConfig } from "@privy-io/wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http } from "wagmi";
@@ -11,9 +11,9 @@ const handleLogin = (user: any) => {
 };
 
 const wagmiConfig = createConfig({
-    chains: [fuse],
+    chains: [base],
     transports: {
-        [fuse.id]: http(),
+        [base.id]: http(),
     },
 });
 
@@ -36,6 +36,7 @@ const privyConfig: PrivyClientConfig = {
         polygonAmoy,
         polygon,
         fuse,
+        base
         // Add any other supported chains here
     ],
 };
