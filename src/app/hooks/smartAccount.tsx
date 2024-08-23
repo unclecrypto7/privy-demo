@@ -6,7 +6,7 @@ import { signerToSimpleSmartAccount } from "permissionless/accounts";
 import { createPimlicoBundlerClient } from "permissionless/clients/pimlico";
 import { ENTRYPOINT_ADDRESS_V06_TYPE } from "permissionless/types";
 import { useEffect, useMemo, useState } from "react";
-import { fuse } from "viem/chains";
+import { fuse, base } from "viem/chains";
 import { http, useAccount, useDisconnect, usePublicClient, useWalletClient } from "wagmi";
 
 const jiffyscanKey = process.env.NEXT_PUBLIC_JIFFYSCAN_API_KEY as string;
@@ -14,10 +14,10 @@ const bundlerUrl = process.env.NEXT_PUBLIC_BUNDLER_URL as string;
 // Define the chains with their respective entry points and RPC URLs
 export const CHAINS = [
     {
-        name: "Fuse",
-        chain: fuse,
+        name: "Base Mainnet",
+        chain: base, // Change from fuse to base mainnet
         bundlerUrl: bundlerUrl,
-        explorerUrl: "https://explorer.fuse.io/tx/",
+        explorerUrl: "https://basescan.org/", // Base Mainnet explorer URL
     },
 ];
 
@@ -91,7 +91,7 @@ export function useSmartAccount() {
         let resObj = null;
 
         while (retries < 20) {
-            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=fuse&first=10&skip=0`, {
+            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=base&first=10&skip=0`, {
                 headers: {
                     "x-api-key": jiffyscanKey,
                 },

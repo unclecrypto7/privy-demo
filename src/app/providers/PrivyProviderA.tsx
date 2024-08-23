@@ -1,7 +1,7 @@
 "use client";
 
 import { PrivyClientConfig, PrivyProvider } from "@privy-io/react-auth";
-import { sepolia, polygonAmoy, polygon, fuse } from "viem/chains";
+import { sepolia, polygonAmoy, polygon, fuse, base } from "viem/chains";
 import { WagmiProvider, createConfig } from "@privy-io/wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http } from "wagmi";
@@ -11,9 +11,9 @@ const handleLogin = (user: any) => {
 };
 
 const wagmiConfig = createConfig({
-    chains: [fuse],
+    chains: [base],
     transports: {
-        [fuse.id]: http(),
+        [base.id]: http(),
     },
 });
 
@@ -24,9 +24,9 @@ const privyConfig: PrivyClientConfig = {
         createOnLogin: "users-without-wallets",
         noPromptOnSignature: false,
     },
-    loginMethods: ["wallet", "email", "google"],
+    loginMethods: ["email", "google"],
     appearance: {
-        showWalletLoginFirst: true,
+        showWalletLoginFirst: false,
         theme: "light",
         accentColor: "#676FFF",
         logo: "https://jiffyscan-frontend.vercel.app/images/Frame%2021.svg",
@@ -35,7 +35,7 @@ const privyConfig: PrivyClientConfig = {
         sepolia,
         polygonAmoy,
         polygon,
-        fuse,
+        base
         // Add any other supported chains here
     ],
 };
