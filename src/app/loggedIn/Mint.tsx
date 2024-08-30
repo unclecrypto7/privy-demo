@@ -106,7 +106,7 @@ const Mint = ({
                     <label className="block mb-2 text-sm font-medium text-gray-900">Mint Transaction hash:</label>
                     <div className="bg-gray-200 p-2 rounded break-all overflow-x-auto">
                         <a
-                            href={`https://jiffyscan.xyz/userOpHash/${txHash}?network=base`}
+                            href={`https://jiffyscan.xyz/userOpHash/${txHash}?network=open-campus-test`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-500 underline"
