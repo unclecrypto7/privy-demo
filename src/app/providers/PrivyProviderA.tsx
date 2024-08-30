@@ -11,7 +11,7 @@ const handleLogin = (user: any) => {
     console.log(`User ${user.id} logged in!`);
 };
 
-const openCompusChain = defineChain({
+export const openCompusChain = defineChain({
     id: 656476,
     name: "OPEN_CAMPUS_TEST",
     nativeCurrency: {
