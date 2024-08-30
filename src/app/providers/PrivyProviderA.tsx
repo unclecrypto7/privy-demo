@@ -5,15 +5,34 @@ import { sepolia, polygonAmoy, polygon, fuse, base } from "viem/chains";
 import { WagmiProvider, createConfig } from "@privy-io/wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http } from "wagmi";
+import { defineChain } from "viem";
 
 const handleLogin = (user: any) => {
     console.log(`User ${user.id} logged in!`);
 };
 
+const openCompusChain = defineChain({
+    id: 656476,
+    name: "OPEN_CAMPUS_TEST",
+    nativeCurrency: {
+        decimals: 18,
+        name: "EDU",
+        symbol: "EDU",
+    },
+    rpcUrls: {
+        default: {
+            http: ["https://rpc.open-campus-codex.gelato.digital/"],
+        },
+    },
+    blockExplorers: {
+        default: { name: "Explorer", url: "https://opencampus-codex.blockscout.com/" },
+    },
+});
+
 const wagmiConfig = createConfig({
-    chains: [base],
+    chains: [openCompusChain],
     transports: {
-        [base.id]: http(),
+        [openCompusChain.id]: http(),
     },
 });
 
@@ -32,10 +51,7 @@ const privyConfig: PrivyClientConfig = {
         logo: "https://jiffyscan-frontend.vercel.app/images/Frame%2021.svg",
     },
     supportedChains: [
-        sepolia,
-        polygonAmoy,
-        polygon,
-        base
+        openCompusChain,
         // Add any other supported chains here
     ],
 };

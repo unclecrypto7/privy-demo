@@ -8,16 +8,17 @@ import { ENTRYPOINT_ADDRESS_V06_TYPE } from "permissionless/types";
 import { useEffect, useMemo, useState } from "react";
 import { fuse, base } from "viem/chains";
 import { http, useAccount, useDisconnect, usePublicClient, useWalletClient } from "wagmi";
+import { openCompusChain } from "../providers/PrivyProviderA";
 
 const jiffyscanKey = process.env.NEXT_PUBLIC_JIFFYSCAN_API_KEY as string;
 const bundlerUrl = process.env.NEXT_PUBLIC_BUNDLER_URL as string;
 // Define the chains with their respective entry points and RPC URLs
 export const CHAINS = [
     {
-        name: "Base Mainnet",
-        chain: base, // Change from fuse to base mainnet
+        name: "Open Campus Codex",
+        chain: openCompusChain, // Change from fuse to base mainnet
         bundlerUrl: bundlerUrl,
-        explorerUrl: "https://basescan.org/", // Base Mainnet explorer URL
+        explorerUrl: "https://opencampus-codex.blockscout.com/", // Base Mainnet explorer URL
     },
 ];
 
@@ -52,13 +53,14 @@ export function useSmartAccount() {
                     transport: bundlerTransport,
                     entryPoint: ENTRYPOINT_ADDRESS_V06,
                 });
-                const jiffyPaymaster = new JiffyPaymaster('https://paymaster.jiffyscan.xyz', selectedChain.chain.id, {
+                const jiffyPaymaster = new JiffyPaymaster("https://paymaster.jiffyscan.xyz", 656476, {
                     "x-api-key": jiffyscanKey,
                 });
 
                 const simpleSmartAccountClient = await signerToSimpleSmartAccount(publicClient, {
                     entryPoint: ENTRYPOINT_ADDRESS_V06,
                     signer: customSigner,
+                    factoryAddress: "0x468d7d0D7f9B651517153FAe7B4a364B535C963c",
                 });
 
                 const smartAccountClient = createSmartAccountClient({
@@ -91,11 +93,14 @@ export function useSmartAccount() {
         let resObj = null;
 
         while (retries < 20) {
-            const res = await fetch(`https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=base&first=10&skip=0`, {
-                headers: {
-                    "x-api-key": jiffyscanKey,
-                },
-            });
+            const res = await fetch(
+                `https://api.jiffyscan.xyz/v0/getBundleActivity?bundle=${txHash}&network=open-campus-test&first=10&skip=0`,
+                {
+                    headers: {
+                        "x-api-key": jiffyscanKey,
+                    },
+                }
+            );
             resObj = JSON.parse(await res.text());
 
             if ("bundleDetails" in resObj && "userOps" in resObj.bundleDetails && resObj.bundleDetails.userOps.length > 0) {

@@ -42,7 +42,7 @@ const Mint = ({
             console.log("Minting 50 tokens...");
             setLoading("Minting");
             const txHash = await smartAccountClient.sendTransaction({
-                to: "0x78e23b3Eb478110D508Ab1AC64b53C24520D68D3",
+                to: "0xf61b1CA3cb7501a0D0f6f71317300f0B8f3060b3",
                 value: BigInt("0"),
                 data: encodeFunctionData({
                     functionName: "mintFifty",
