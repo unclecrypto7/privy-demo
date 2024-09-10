@@ -43,7 +43,7 @@ const privyConfig: PrivyClientConfig = {
         createOnLogin: "users-without-wallets",
         noPromptOnSignature: false,
     },
-    loginMethods: ["email", "google"],
+    loginMethods: ["wallet","email", "google"],
     appearance: {
         showWalletLoginFirst: false,
         theme: "light",
